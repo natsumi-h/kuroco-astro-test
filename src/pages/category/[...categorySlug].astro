@@ -1,0 +1,68 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  // カテゴリー一覧を取得
+  const url = import.meta.env.KUROCO_URL + "/rcms-api/3/article/categories ";
+  const res = await fetch(url);
+  const data = await res.json();
+  const categoryList = data.list;
+
+  //   カテゴリー一覧からカテゴリーごとの記事一覧を取得
+  const getCategoryPosts = async (categorySlug: string) => {
+    const url =
+      import.meta.env.KUROCO_URL +
+      `/rcms-api/3/article/category/${categorySlug}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return data.list;
+  };
+
+  const paths = await Promise.all(
+    categoryList.map(async (category: Category) => {
+      const categoryPosts = await getCategoryPosts(category.slug);
+      return {
+        params: { categorySlug: category.slug },
+        props: { categoryPosts },
+      };
+    })
+  );
+
+  return paths;
+}
+
+type Post = {
+  slug: string;
+  subject: string;
+  body: string;
+  contents_type_slug: string;
+};
+
+type Category = {
+  slug: string;
+  name: string;
+};
+
+const { categorySlug } = Astro.params;
+const { categoryPosts } = Astro.props;
+---
+
+<Layout title="Etiquette" description="Lorem ipsum dolor sit amet">
+  <main>
+    <div>
+      {categorySlug}
+
+      <ul>
+        {
+          categoryPosts?.map((post: Post) => {
+            return (
+              <li>
+                <a href={`/article/${post.slug}`}>{post.subject}</a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </main>
+</Layout>

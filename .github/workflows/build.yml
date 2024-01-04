@@ -68,8 +68,8 @@ jobs:
         run: npm run build
       # - name: Generate
       #   run: npm run generate
-        # - name: Zip artifact for upload
-        #  run: cd dist && zip ../dist.zip . -r
+      # - name: Zip artifact for upload
+      #  run: cd dist && zip ../dist.zip . -r
       - name: Archive Production Artifact
         uses: actions/upload-artifact@v3
         with:

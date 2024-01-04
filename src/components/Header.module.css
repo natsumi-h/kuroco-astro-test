@@ -1,0 +1,19 @@
+.header {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 82px;
+}
+.button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 25px;
+}
+
+@media (min-width: 769px) {
+  .button {
+    display: none;
+  }
+}

@@ -1,0 +1,28 @@
+.spNav {
+  background-color: #a37078;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 50px;
+  padding-bottom: 130px;
+  box-sizing: border-box;
+}
+
+.spNavClosed {
+  display: block;
+}
+
+.spNav button {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 16px;
+  height: 16px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}

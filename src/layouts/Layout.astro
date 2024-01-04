@@ -1,0 +1,46 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import { Header } from "../components/Header.tsx";
+import Footer from "../components/Footer.astro";
+// import { SITE_TITLE } from "../consts";
+import SideNavLeft from "./SideNavLeft.astro";
+import SideNavRight from "./SideNavRight.astro";
+import { SpNav } from "./SpNav.tsx";
+
+const { title, description } = Astro.props;
+---
+
+<html lang="ja">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body>
+    <!-- <div class="sidenav-left">SideNav Left</div> -->
+    <SideNavLeft />
+
+    <div class="contents">
+      <Header client:load />
+      <main>
+        <slot />
+      </main>
+      <Footer />
+
+      <SpNav client:load />
+    </div>
+
+    <!-- <div class="sidenav-right">SideNav Right</div> -->
+    <SideNavRight />
+    <style>
+      @media (min-width: 769px) {
+        body {
+          display: flex;
+        }
+
+        .contents {
+          max-width: 490px;
+          position: relative;
+        }
+      }
+    </style>
+  </body>
+</html>

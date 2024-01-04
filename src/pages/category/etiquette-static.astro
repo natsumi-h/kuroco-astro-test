@@ -1,0 +1,39 @@
+---
+import Layout from "../../layouts/Layout.astro";
+const url =
+  import.meta.env.KUROCO_URL + "/rcms-api/3/article/category/etiquette";
+const res = await fetch(url);
+const data = await res.json();
+const posts = data.list;
+// console.log(posts);
+
+type Post = {
+  slug: string;
+  subject: string;
+  body: string;
+  contents_type_slug: string;
+};
+---
+
+<Layout title="Etiquette" description="Lorem ipsum dolor sit amet">
+  <main>
+    <div>
+      <ul>
+        {
+          posts.map((post: Post) => (
+            <li>
+              <a href={`/blog/${post.slug}/`}>
+                {/* <img width={720} height={360} src={post.data.heroImage} alt="" /> */}
+                <h4 class="title">{post.subject}</h4>
+                {/* JS comment syntax is also valid */}
+                {/* <p class="date"> */}
+                {/* <FormattedDate date={post.data.pubDate} />*/}
+                {/*</p> */}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </main>
+</Layout>
