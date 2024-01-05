@@ -1,15 +1,112 @@
 ---
-
+import { Image } from "astro:assets";
+import headerLogo from "../images/header-logo.png";
 ---
 
-<div class="sidenav-left">SideNav Left</div>
+<div class="sidenav-left">
+  <div class="inner">
+    <a href="/" class="logo"><Image src={headerLogo} alt="The Arch" /></a>
+    <nav>
+      <ul>
+        <li>
+          <a href="/">Feature<br /><span>特集記事</span></a>
+        </li>
+
+        <li>
+          <a href="/category/beauty">Beauty<br /><span>ゲスト美容</span></a>
+        </li>
+        <li>
+          <a href="/category/entertainment">
+            Entertainment<br /><span>余興・スピーチ</span>
+          </a>
+        </li>
+        <li>
+          <a href="/category/gift">
+            Gift<br /><span>新郎新婦へのお祝い</span>
+          </a>
+        </li>
+        <li>
+          <a href="/category/etiquette">
+            Etiquette<br /><span>マナー・エチケット</span>
+          </a>
+        </li>
+        <li>
+          <a href="/contact">
+            Others<br /><span>その他</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <p class="copyright">
+    COPYRIGHT&copy;TAKE AND GIVENEEDS CO.,LTD. ALL RIGHTS RESERVED.
+  </p>
+</div>
+
 <style>
   .sidenav-left {
     display: none;
-    font-family: "Cormorant Infant", sans-serif;
+    background-color: #fbfbf5;
+    position: sticky;
+    height: 100vh;
+    top: 0;
+    padding: 0 20px;
   }
 
-  @media (min-width: 769px) {
+  .inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 63%;
+  }
+
+  .logo {
+    display: block;
+  }
+
+  nav {
+    color: #a37078;
+    font-family: "Cormorant Infant", sans-serif;
+    line-height: 81.8%;
+    word-break: break-all;
+  }
+
+  nav a {
+    color: #a37078;
+  }
+
+  nav li {
+    font-size: 28px;
+    list-style-type: disc;
+  }
+
+  ul {
+    padding-left: 40px;
+  }
+
+  ul li:not(:first-child) {
+    margin-top: 32px;
+  }
+
+  span {
+    color: #4a4a4a;
+    font-size: 15px;
+    font-family: "Noto Sans JP", sans-serif;
+    display: inline-block;
+    margin-top: 10px;
+  }
+
+  .copyright {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    font-size: 0.8rem;
+    font-size: 11px;
+    color: #2e2e2e;
+  }
+
+  @media (min-width: 744px) {
     .sidenav-left {
       display: block;
       flex-grow: 1;

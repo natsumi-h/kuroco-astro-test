@@ -1,5 +1,7 @@
 ---
+import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
+import vector from "../../images/vector-white.png";
 
 export async function getStaticPaths() {
   // カテゴリー一覧を取得
@@ -23,7 +25,7 @@ export async function getStaticPaths() {
       const categoryPosts = await getCategoryPosts(category.slug);
       return {
         params: { categorySlug: category.slug },
-        props: { categoryPosts },
+        props: { categoryPosts, category },
       };
     })
   );
@@ -31,38 +33,198 @@ export async function getStaticPaths() {
   return paths;
 }
 
-type Post = {
+export type Post = {
   slug: string;
   subject: string;
   body: string;
   contents_type_slug: string;
+  thumbnail: {
+    url: string;
+  };
 };
 
 type Category = {
   slug: string;
-  name: string;
+  category_nm: string;
+  ext_col_01: string;
 };
 
 const { categorySlug } = Astro.params;
-const { categoryPosts } = Astro.props;
+const { categoryPosts, category } = Astro.props;
 ---
 
 <Layout title="Etiquette" description="Lorem ipsum dolor sit amet">
-  <main>
-    <div>
-      {categorySlug}
+  <div class="category-header">
+    <h2>{categorySlug}<br /><span>{category.category_nm}</span></h2>
+    <p class="category-lead">
+      {category.ext_col_01}
+    </p>
+  </div>
 
-      <ul>
-        {
-          categoryPosts?.map((post: Post) => {
-            return (
-              <li>
-                <a href={`/article/${post.slug}`}>{post.subject}</a>
-              </li>
-            );
-          })
-        }
-      </ul>
-    </div>
-  </main>
+  <div class="category-body">
+    <Image class="vector" src={vector} alt="vector" />
+    <ul class="cardList">
+      {
+        categoryPosts?.map((post: Post) => {
+          return (
+            <li class="card">
+              <p class="categoryTag">{categorySlug}</p>
+              <a href={`/article/${post.slug}`}>
+                <div class="imageWrapper">
+                  <Image
+                    src={post.thumbnail.url}
+                    alt={post.subject}
+                    width="177"
+                    height="177"
+                    class="image"
+                  />
+                </div>
+
+                <p class="title">{post.subject}</p>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <button>READ MORE</button>
+  </div>
 </Layout>
+
+<style>
+  .category-header {
+    padding: 0 20px;
+    background-color: #fbfbf5;
+    padding-top: 40px;
+    padding-bottom: 90px;
+  }
+
+  .category-body {
+    padding: 40px 20px 170px 20px;
+    position: relative;
+  }
+
+  h2 {
+    font-size: 44px;
+    font-family: "Cormorant Infant", sans-serif;
+    text-align: center;
+    text-transform: capitalize;
+    line-height: 81.8%;
+    font-weight: 400;
+  }
+
+  span {
+    display: inline-block;
+    font-size: 15px;
+    line-height: 1;
+  }
+
+  .category-lead {
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 200%;
+    padding: 0 20px;
+    color: #2e2e2e;
+  }
+
+  .vector {
+    width: 100%;
+    position: absolute;
+    top: -50px;
+    left: 0;
+  }
+
+  .cardList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px 22px;
+  }
+
+  .cardList .card:nth-child(6n + 1) img {
+    border-radius: 0px 32px 0px 0px;
+  }
+
+  .cardList .card:nth-child(6n + 2) img {
+    border-radius: 0px 0px 0px 32px;
+  }
+
+  .cardList .card:nth-child(6n + 3) img {
+    border-radius: 0px 0px 32px 0px;
+  }
+
+  .cardList .card:nth-child(6n + 4) img {
+    border-radius: 0px 32px 0px 0px;
+  }
+
+  .cardList .card:nth-child(6n + 5) img {
+    border-radius: 0px 0px 0px 32px;
+  }
+
+  .cardList .card:nth-child(6n + 6) img {
+    border-radius: 0px 0px 32px 0px;
+  }
+
+  .card {
+    width: calc(50% - 22px / 2);
+    position: relative;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #c3c1ac;
+  }
+
+  .categoryTag {
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 16px;
+    border: 1px solid #2e2e2e;
+    z-index: 1;
+    font-family: "Cormorant Infant", sans-serif;
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .title {
+    margin-top: 12px;
+    color: #2e2e2e;
+    font-size: 14px;
+    line-height: 150%;
+  }
+
+  button {
+    width: 168px;
+    height: 48px;
+    border-radius: 8px;
+    font-size: 20px;
+    color: #2e2e2e;
+    font-family: "Cormorant Infant", sans-serif;
+    margin: 50px auto 0 auto;
+    background-color: transparent;
+    border: 1px solid #2e2e2e;
+    cursor: pointer;
+    padding: 0;
+    display: block;
+  }
+
+  .imageWrapper {
+    display: block;
+    position: relative;
+  }
+
+  .imageWrapper::before {
+    content: "";
+    display: block;
+    padding-top: 100%;
+  }
+
+  .image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    object-fit: cover;
+    overflow: hidden;
+  }
+</style>

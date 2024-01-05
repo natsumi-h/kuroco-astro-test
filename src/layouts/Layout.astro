@@ -31,14 +31,20 @@ const { title, description } = Astro.props;
     <!-- <div class="sidenav-right">SideNav Right</div> -->
     <SideNavRight />
     <style>
-      @media (min-width: 769px) {
+      @media (min-width: 744px) {
         body {
           display: flex;
         }
 
         .contents {
-          max-width: 490px;
+          max-width: 390px;
           position: relative;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .contents {
+          max-width: 490px;
         }
       }
     </style>

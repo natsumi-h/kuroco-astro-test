@@ -4,6 +4,7 @@
   justify-content: space-between;
   align-items: center;
   height: 82px;
+  background-color: transparent;
 }
 .button {
   background: none;

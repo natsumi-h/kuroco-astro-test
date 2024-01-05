@@ -2,13 +2,26 @@
 
 ---
 
-<div class="sidenav-right">SideNav Right</div>
+<div class="sidenav-right"><div class="inner">right nav inner</div></div>
 <style>
   .sidenav-right {
     display: none;
+    background-color: #fbfbf5;
+    position: sticky;
+    height: 100vh;
+    top: 0;
+    padding: 0 20px;
   }
 
-  @media (min-width: 769px) {
+  .inner{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 63%;
+  }
+
+  @media (min-width: 744px) {
     .sidenav-right {
       display: block;
       flex-grow: 1;
